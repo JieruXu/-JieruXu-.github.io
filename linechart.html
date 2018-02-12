@@ -27,7 +27,14 @@
 </style>
 
 <body>
- <button id="mybutton" class="button" onclick="changeLine">CHANGE LINE CHART</button>
+ <center>
+   <button class="button" onclick="myFunction()">CHANGE LINE CHART</button>
+ </center>
+ <script>
+  function myFunction(){
+    location.reload();
+  }
+  </script>
 </body>
 
 
@@ -38,7 +45,6 @@
 var margin = {top: 50, right: 50, bottom: 50, left: 50}
   , width = window.innerWidth - margin.left - margin.right
   , height = window.innerHeight - margin.top - margin.bottom;
-
 
 var n = 25;
 
@@ -60,22 +66,21 @@ var line = d3.line()
     return yScale(d.y); })
     .curve(d3.curveMonotoneX)
 
-    var svg = d3.select("body").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+var dataset = d3.range(n).map(function(d) {
+ return {"y": d3.randomUniform(1)() } })
 
-var changeLine = function() {
-  var dataset = d3.range(n).map(function(d) {
-   return {"y": d3.randomUniform(1)() } })
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  svg.append("g")
+svg.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(xScale));
 
-  svg.append("g")
+svg.append("g")
     .attr("class", "y axis")
     .call(d3.axisLeft(yScale));
 
@@ -93,9 +98,7 @@ svg.selectAll(".dot")
     .attr("cy", function(d) {
      return yScale(d.y) })
     .attr("r", 5);
-  };
 
- changeLine;
 
 </script>
 
