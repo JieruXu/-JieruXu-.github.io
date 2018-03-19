@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <script type="text/javascript">
+  window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer",
+    {
+      title:{
+        text: "Critic score and critic count of TOP 20 games in for U.S. market"
+      },
+      axisY: {
+
+        maximum: 100
+      },
+      data: [
+      {
+        type: "bar",
+        showInLegend: true,
+        legendText: "Critic score",
+        color: "#50528C",
+        dataPoints: [
+        { y: 0, label: "Super Mario World"},
+        { y: 58, label: "Wii Play"},
+        { y: 87, label: "New Super Mario Bros. Wii"},
+        { y: 61, label: "Kinect Adventures!"},
+        { y: 80, label: "Wii Sports Resort"},
+        { y: 82, label: "Mario Kart Wii"},
+        { y: 0, label: "Tetris"},
+        { y: 0, label: "Duck Hunt"},
+        { y: 0, label: "Super Mario Bros."},
+        { y: 76, label: "Wii Sports"},
+        ]
+      },
+
+      {
+        type: "bar",
+        showInLegend: true,
+        legendText: "Critic count",
+        color: "#BF282D",
+        dataPoints: [
+          { y: 0, label: "Super Mario World"},
+          { y: 80, label: "Wii Play"},
+          { y: 41, label: "New Super Mario Bros. Wii"},
+          { y: 65, label: "Kinect Adventures!"},
+          { y: 0, label: "Wii Sports Resort"},
+          { y: 0, label: "Mario Kart Wii"},
+          { y: 73, label: "Tetris"},
+          { y: 73, label: "Duck Hunt"},
+          { y: 0, label: "Super Mario Bros."},
+          { y: 51, label: "Wii Sports"},
+        ]
+      }
+      ]
+    });
+
+chart.render();
+}
+</script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script></head>
+<body>
+  <div id="chartContainer" style="height: 500px; width: 80%;">
+  </div>
+</body>
+</html>

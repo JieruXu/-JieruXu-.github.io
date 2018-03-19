@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script type="text/javascript">
+window.onload = function () {
+  var chart = new jieru.Chart("chartContainer",{
+    title :{
+        text: "Chinese Mobile Game Market"
+    },
+
+    axisY:[
+        {
+            title: " Sales(Billion Dollar)",
+            lineColor: "#369EAD",
+      			titleFontColor: "#369EAD",
+      			labelFontColor: "#369EAD"
+        },
+        {
+            title: " Increasing rate(%)",
+            lineColor: "#7F6084",
+      			titleFontColor: "#7F6084",
+      			labelFontColor: "#7F6084"
+        }
+    ],
+
+    data: [
+
+        {
+        type: "line",
+        axisYindex: 0,
+        dataPoints :
+        [
+          { label: "2008", y: 25.0 },
+          { label: "2009", y: 326.7 },
+          { label: "2010", y: 42 },
+          { label: "2011", y: 86.8 },
+          { label: "2012", y: 90.6 },
+          { label: "2013", y: 246.9 },
+          { label: "2014", y: 144.6 },
+          { label: "2015", y: 87.2 },
+          { label: "2016", y: 59.2 },
+          { label: "2017", y: 41.7 },
+        ]
+        },
+
+        {
+        type: "column",
+        axisYIndex: 1,
+        dataPoints : [
+          { label: "2008", y: 0.02 },
+          { label: "2009", y: 0.1 },
+          { label: "2010", y: 0.14 },
+          { label: "2011", y: 0.26 },
+          { label: "2012", y: 0.5 },
+          { label: "2013", y: 1.73 },
+          { label: "2014", y: 4.23 },
+          { label: "2015", y: 7.92 },
+          { label: "2016", y: 12.6 },
+          { label: "2017", y: 17.86 },
+        ]
+        }
+
+    ]
+
+});
+
+chart.render();
+
+}
+</script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 100%;">
+</div>
+</body>
+</html>
