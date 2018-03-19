@@ -3,6 +3,12 @@
 <head>
   <script src="https://d3js.org/d3.v4.min.js"></script>
 </head>
+
+<body id="myBody">
+  <svg id="viz"></svg>
+  <p><center>Critic score and critic count of TOP 20 games in for U.S. market</center></p>
+</body>
+
   <script type="text/javascript">
   d3.csv("Video game.csv", function(error, data) {
    if(error){
