@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+  <script type="text/javascript">
+  d3.csv("Video game.csv", function(error, data) {
+   if(error){
+     console.log("Error!!!");
+   }
+   else{
+     console.log("CSV dataArray");
+     console.log(data);
+   }
+ });
+ </script>
+</html>
