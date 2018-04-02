@@ -4,123 +4,298 @@
     <title>Map!</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://unpkg.com/topojson@3"></script>
-    <style>
-    </style>
 
+    <style type="text/css">
+        .axis text {
+          font: 10px sans-serif;
+        }
+
+        .axis line, .axis path {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+        svg{
+          padding-left: 50px;
+        }
+
+        .names {
+          fill: none;
+          stroke: #fff;
+          stroke-linejoin: round;
+          }
+
+        /* Tooltip CSS */
+        .d3-tip {
+          line-height: 1.5;
+          font-weight: 400;
+          font-family:"avenir next", Arial, sans-serif;
+          padding: 6px;
+          background: rgba(0, 0, 0, 0.6);
+          color: #7C93DA;
+          border-radius: 1px;
+          pointer-events: none;
+        }
+
+        /* Creates a small triangle extender for the tooltip */
+        .d3-tip:after {
+          box-sizing: border-box;
+          display: inline;
+          font-size: 8px;
+          width: 100%;
+          line-height: 1.5;
+          color: rgba(0, 0, 0, 0.6);
+          position: absolute;
+          pointer-events: none;
+
+        }
+
+        /* Northward tooltips */
+        .d3-tip.n:after {
+          content: "\25BC";
+          margin: -1px 0 0 0;
+          top: 100%;
+          left: 0;
+          text-align: center;
+        }
+
+        /* Eastward tooltips */
+        .d3-tip.e:after {
+          content: "\25C0";
+          margin: -4px 0 0 0;
+          top: 50%;
+          left: -8px;
+        }
+
+        /* Southward tooltips */
+        .d3-tip.s:after {
+          content: "\25B2";
+          margin: 0 0 1px 0;
+          top: -8px;
+          left: 0;
+          text-align: center;
+        }
+
+        /* Westward tooltips */
+        .d3-tip.w:after {
+          content: "\25B6";
+          margin: -4px 0 0 -1px;
+          top: 50%;
+          left: 100%;
+        }
+
+    /*    text{
+          pointer-events:none;
+        }*/
+
+        .details{
+          color:white;
+        }
+
+    </style>
 
   </head>
 
   <body>
-    <svg id="map" width=600 height=400>
-      <rect width=600 height=400 fill="#00386f"></rect>
+    <svg id="map" width=1200 height=1000>
+      <rect width=1200 height=1000 fill="white"></rect>
     </svg>
+
+    <div id="legend1"></div>
   </body>
 
-      <script type="text/javascript">
-      d3.csv("latindance.csv", function(error, data) {
-       if(error){
-         console.log("Error!!!");
-       }
-       else{
-         console.log("CSV dataArray");
-         console.log(data);
-       }
-     });
-     </script>
+  <script type="text/javascript">
 
-  <script>
+              var tip = d3.tip()
+              .attr('class', 'd3-tip')
+              .offset([-10, 0])
+              .html(function(d) {
+                return "<strong>Country: </strong><span class='details'>" +
+                d.properties.name + "<br></span>" + "<strong>Population: </strong><span class='details'>" + format(d.population) +"</span>";
+              })
 
-        //loading a lot of data
-        d3.queue()
-          .defer(d3.json, "world.json")
-          .awaitAll(function(error, dataArray){
-            var data = dataArray[0];
-            console.log(dataArray);
+              var margin = {top: 0, right: 0, bottom: 0, left: 0},
+              width = 960 - margin.left - margin.right,
+              height = 500 - margin.top - margin.bottom;
 
-        d3.json("world.json", function(error, data){
+              var w = 400, h = 50;
 
-            var geoJSON = topojson.feature(data, data.objects.countries);
+              var key = d3.select("#legend1")
+                .append("svg")
+                .attr("width", w)
+                .attr("height", h);
+
+              var legend = key.append("defs")
+                .append("svg:linearGradient")
+                .attr("id", "gradient")
+                .attr("x1", "0%")
+                .attr("y1", "100%")
+                .attr("x2", "100%")
+                .attr("y2", "100%")
+                .attr("spreadMethod", "pad");
+
+              legend.append("stop")
+                .attr("offset", "0%")
+                .attr("stop-color", "#F7C1BB")
+                .attr("stop-opacity", 1);
+
+              legend.append("stop")
+                .attr("offset", "33%")
+                .attr("stop-color", "#E56557")
+                .attr("stop-opacity", 1);
+
+              legend.append("stop")
+                .attr("offset", "66%")
+                .attr("stop-color", "#CD483A")
+                .attr("stop-opacity", 1);
+
+              legend.append("stop")
+                .attr("offset", "100%")
+                .attr("stop-color", "#641E16")
+                .attr("stop-opacity", 1);
+
+              key.append("rect")
+                .attr("width", w)
+                .attr("height", h - 30)
+                .style("fill", "url(#gradient)")
+                .attr("transform", "translate(0,10)");
+
+              var y = d3.scaleLinear()
+                .range([400, 0])
+                .domain([35340, 100]);
+
+              var yAxis = d3.axisBottom()
+                .scale(y)
+                .ticks(5);
+
+              key.append("g")
+                .attr("class", "y axis")
+                .attr("transform", "translate(0,30)")
+                .call(yAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("axis title");
+
+      //loading a lot of data
+      d3.queue()
+        .defer(d3.json, "world.json")
+        .defer(d3.csv, "latindance.csv")
+        .awaitAll(function(error, dataArray){
+          var danceData = dataArray[1];
+          var data = dataArray[0];
+          console.log(dataArray);
+
+          danceData.forEach(function(country) {
+            country.ranking = parseFloat(country.ranking);
+          });
+
+          var geoJSON = topojson.feature(data, data.objects.countries);
 
           geoJSON.features = geoJSON.features.filter(function(feature) {
             return feature.id != "AQ";
           });
 
           var proj = d3.geoMercator()
-             .fitSize([600, 400], geoJSON);
+             .fitSize([1200, 1000], geoJSON);
 
           var path = d3.geoPath()
              .projection(proj);
 
-         var colorScale = d3.scaleLinear()
-             .domain([Hongkong, Russia])
-             .range(["#ffd8d8", "#6f0000"]);
+          var colorScale = d3.scaleLinear()
+             .domain([125, 35334])
+             .range(["#EC7063", "#641E16"]);
 
           var countryLookup = {
              RU: "Russia",
-             US: "America"
-             IT: "Italy"
-             GT: "Great Britain"
-             DE: "Germany"
-             PL: "Poland"
-             CN: "China"
-             JP: "Japan"
-             AZ: "Azerbaijan"
-             UA: "Ukraine"
-             CA: "Canada"
-             IL: "Israel"
-             LT: "Lithuania"
-             TW: "Chinese Taipei"
-             AT: "Australia"
-             LV: "Latvia"
-             KR: "South Korea"
-             NL: "Netherlands"
+             US: "United States",
+             IT: "Italy",
+             GT: "Great Britain",
+             DE: "Germany",
+             PL: "Poland",
+             CN: "China",
+             JP: "Japan",
+             AZ: "Azerbaijan",
+             UA: "Ukraine",
+             CA: "Canada",
+             IL: "Israel",
+             LT: "Lithuania",
+             TW: "Chinese Taipei",
+             AT: "Austria",
+             LV: "Latvia",
+             KR: "South Korea",
+             NL: "Netherlands",
              HK: "Hong Kong"
            };
-
-        .attr("fill", function(d) {
-            var countryName = countryLookup[d.id];
-            var countryData = csvData.filter(function(d) { return d.Country == countryName; });
-            return colorScale(countryData[0].Country);
-          })
 
           var countries = d3.select("#map").selectAll("path")
               .data(geoJSON.features);
 
           countries.enter().append("path")
-              .attr("fill", function(feature){
-                if (feature.id == "US") {
-                  return "#6f0000";
-                }
-                else {
-                  return "#00264b";
+            .attr("fill", function(d) {
+              var countryName = countryLookup[d.id];
+              if (countryName == undefined) {
+                return "#CACFD2";
+              }
+              var countryData = danceData.filter(function(d) { return d.country == countryName; });
+              console.log(d.id, countryName, countryData);
+              return colorScale(countryData[0].ranking);
+            })
+            .attr("stroke", "white")
+            .attr("stroke-width", 1)
+            .attr("d", function(feature) {
+              return path(feature);
+            });
 
 
-              })
+            function ready(error, data, population) {
 
+              var scoreById = {};
 
+              score.forEach(function(d) { populationById[d.id] = +d.score; });
+              data.features.forEach(function(d) { d.score = scoreById[d.id] });
 
-              .attr("stroke", "white")
-              .attr("stroke-width", 1)
-              .attr("d", function(feature) {
-                  return path(feature);
-      });
+              svg.append("g")
+                  .attr("class", "countries")
+                .selectAll("path")
+                  .data(data.features)
+                .enter().append("path")
+                  .attr("d", path)
+                  .style("fill", function(d) { return color(scoreById[d.id]); })
+                  .style('stroke', 'white')
+                  .style('stroke-width', 1.5)
+                  .style("opacity",0.8)
+                  // tooltips
+                    .style("stroke","white")
+                    .style('stroke-width', 0.3)
+                    .on('mouseover',function(d){
+                      tip.show(d);
 
-            var points = [
-                {"name": "Boston", "coords": [-71.0589, 42.3601]},
-                {"name": "London", "coords": [-0.1278, 51.5074]}
-            ];
+                      d3.select(this)
+                        .style("opacity", 1)
+                        .style("stroke","white")
+                        .style("stroke-width",3);
+                    })
+                    .on('mouseout', function(d){
+                      tip.hide(d);
 
-            var dots = d3.select("#map").selectAll("circle")
-               .data(points);
+                      d3.select(this)
+                        .style("opacity", 0.8)
+                        .style("stroke","white")
+                        .style("stroke-width",0.3);
+                    });
 
-            dots.enter().append("circle")
-               .attr("transform", function(point) {
-                 return "translate( " + proj(point.coords) + " )"
-               })
-               .attr("fill", "black")
-               .attr("r", 8);
-             });
-    });
+              svg.append("path")
+                  .datum(topojson.mesh(data.features, function(a, b) { return a.id !== b.id; }))
+                   // .datum(topojson.mesh(data.features, function(a, b) { return a !== b; }))
+                  .attr("class", "names")
+                  .attr("d", path);
+            }
+
+        });
+
 
   </script>
 
