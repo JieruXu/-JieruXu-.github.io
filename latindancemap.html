@@ -19,12 +19,6 @@
           padding-left: 50px;
         }
 
-        .names {
-          fill: none;
-          stroke: #fff;
-          stroke-linejoin: round;
-          }
-
         /* Tooltip CSS */
         .d3-tip {
           line-height: 1.5;
@@ -106,78 +100,78 @@
 
   <script type="text/javascript">
 
-              var tip = d3.tip()
-              .attr('class', 'd3-tip')
-              .offset([-10, 0])
-              .html(function(d) {
-                return "<strong>Country: </strong><span class='details'>" +
-                d.properties.name + "<br></span>" + "<strong>Population: </strong><span class='details'>" + format(d.population) +"</span>";
-              })
+      var tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .offset([-10, 0])
+      .html(function(d) {
+        return "<strong>Country: </strong><span class='details'>" +
+        d.properties.name + "<br></span>" + "<strong>Score: </strong><span class='details'>" + format(d.score) +"</span>";
+      })
 
-              var margin = {top: 0, right: 0, bottom: 0, left: 0},
-              width = 960 - margin.left - margin.right,
-              height = 500 - margin.top - margin.bottom;
+      var margin = {top: 0, right: 0, bottom: 0, left: 0},
+      width = 960 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
 
-              var w = 400, h = 50;
+      var w = 400, h = 50;
 
-              var key = d3.select("#legend1")
-                .append("svg")
-                .attr("width", w)
-                .attr("height", h);
+      var key = d3.select("#legend1")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
 
-              var legend = key.append("defs")
-                .append("svg:linearGradient")
-                .attr("id", "gradient")
-                .attr("x1", "0%")
-                .attr("y1", "100%")
-                .attr("x2", "100%")
-                .attr("y2", "100%")
-                .attr("spreadMethod", "pad");
+      var legend = key.append("defs")
+        .append("svg:linearGradient")
+        .attr("id", "gradient")
+        .attr("x1", "0%")
+        .attr("y1", "100%")
+        .attr("x2", "100%")
+        .attr("y2", "100%")
+        .attr("spreadMethod", "pad");
 
-              legend.append("stop")
-                .attr("offset", "0%")
-                .attr("stop-color", "#F7C1BB")
-                .attr("stop-opacity", 1);
+      legend.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "#F7C1BB")
+        .attr("stop-opacity", 1);
 
-              legend.append("stop")
-                .attr("offset", "33%")
-                .attr("stop-color", "#E56557")
-                .attr("stop-opacity", 1);
+      legend.append("stop")
+        .attr("offset", "33%")
+        .attr("stop-color", "#E56557")
+        .attr("stop-opacity", 1);
 
-              legend.append("stop")
-                .attr("offset", "66%")
-                .attr("stop-color", "#CD483A")
-                .attr("stop-opacity", 1);
+      legend.append("stop")
+        .attr("offset", "66%")
+        .attr("stop-color", "#CD483A")
+        .attr("stop-opacity", 1);
 
-              legend.append("stop")
-                .attr("offset", "100%")
-                .attr("stop-color", "#641E16")
-                .attr("stop-opacity", 1);
+      legend.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", "#641E16")
+        .attr("stop-opacity", 1);
 
-              key.append("rect")
-                .attr("width", w)
-                .attr("height", h - 30)
-                .style("fill", "url(#gradient)")
-                .attr("transform", "translate(0,10)");
+      key.append("rect")
+        .attr("width", w)
+        .attr("height", h - 30)
+        .style("fill", "url(#gradient)")
+        .attr("transform", "translate(0,10)");
 
-              var y = d3.scaleLinear()
-                .range([400, 0])
-                .domain([35340, 100]);
+      var y = d3.scaleLinear()
+        .range([400, 0])
+        .domain([35334, 125]);
 
-              var yAxis = d3.axisBottom()
-                .scale(y)
-                .ticks(5);
+      var yAxis = d3.axisBottom()
+        .scale(y)
+        .ticks(5);
 
-              key.append("g")
-                .attr("class", "y axis")
-                .attr("transform", "translate(0,30)")
-                .call(yAxis)
-                .append("text")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 0)
-                .attr("dy", ".71em")
-                .style("text-anchor", "end")
-                .text("axis title");
+      key.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(0,30)")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("axis title");
 
       //loading a lot of data
       d3.queue()
@@ -189,7 +183,7 @@
           console.log(dataArray);
 
           danceData.forEach(function(country) {
-            country.ranking = parseFloat(country.ranking);
+            country.score = parseFloat(country.score);
           });
 
           var geoJSON = topojson.feature(data, data.objects.countries);
@@ -241,7 +235,7 @@
               }
               var countryData = danceData.filter(function(d) { return d.country == countryName; });
               console.log(d.id, countryName, countryData);
-              return colorScale(countryData[0].ranking);
+              return colorScale(countryData[0].score);
             })
             .attr("stroke", "white")
             .attr("stroke-width", 1)
@@ -250,11 +244,11 @@
             });
 
 
-            function ready(error, data, population) {
+            function ready(error, data, score) {
 
               var scoreById = {};
 
-              score.forEach(function(d) { populationById[d.id] = +d.score; });
+              score.forEach(function(d) { scoreById[d.id] = +d.score; });
               data.features.forEach(function(d) { d.score = scoreById[d.id] });
 
               svg.append("g")
