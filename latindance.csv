@@ -1,99 +1,21 @@
 country,score
-Afghanistan,92.65
-Albania,75.21
-Algeria,64.16
-Argentina,53.64
-Armenia,63.55
-Australia,24.76
-Austria,22.87
-Bahrain,76.41
-Bangladesh,88.93
-Belarus,36
-Belgium,48.92
-Bosnia And Herzegovina,61.56
-Brazil,59.48
-Bulgaria,63.03
-Cambodia,79.41
-Canada,27.7
-Chile,66.79
-China,85.89
-Colombia,62.47
-Costa Rica,49.87
-Croatia,32.73
-Cyprus,55.76
-Czech Republic,41.02
-Denmark,23.6
-Dominican Republic ,76.8
-Ecuador,59.19
-Egypt,87.64
-Estonia,17.17
-Ethiopia,77.96
-Finland,12.07
-France,40.41
-Georgia,73.43
-Germany,27.32
-Greece,52.85
-Hong Kong,69.35
-Hungary,46.57
-Iceland,13.73
-India,75.89
-Indonesia,60.66
-Iran,81.21
-Iraq,79.35
-Ireland,28.66
-Israel,60.27
-Italy,53.11
-Jamaica,71.89
-Japan,41.66
-Jordan,82.26
-Kazakhstan,73.71
-Kenya,72.26
-Latvia,31.81
-Lebanon,85.68
-Lithuania,33.14
-Macedonia,82.04
-Malaysia,66.52
-Malta,71.93
-Mauritius,57.56
-Mexico,66.13
-Monaco,83.71
-Mongolia,92.65
-Morocco,67.66
-Myanmar,93.03
-Nepal,84.01
-Netherlands,27.16
-New Zealand,21.77
-Nigeria,85.54
-Norway,20.22
-Oman,42.78
-Pakistan,77.5
-Panama,65.91
-Peru,83.35
-Philippines,72.55
-Poland,51.12
-Portugal,30.53
-Qatar,70.24
-Romania,53.04
-Russia,63.26
-Saudi Arabia,71.72
-Serbia,56.58
-Singapore,33.94
-Slovakia,40.67
-Slovenia,26.25
-South Africa,62.15
-South Korea,52.87
-Spain,38.11
-Sri Lanka,60.64
-Sweden,19.1
-Switzerland,23.01
-Taiwan,63.25
-Thailand,72.86
-Tunisia,66.16
-Turkey,69.44
-Ukraine,67.24
-United Arab Emirates,55.78
-Great Britain,37.71
-United States,31.7
-Uruguay,49.37
-Venezuela,73.66
-Vietnam,88.1
+Russia,35334
+United States,33325
+Italy,31050
+Great Britain,23425
+Germany,19075
+Poland,11900
+China,7325
+Japan,6450
+Azerbaijan,5900
+Ukraine,4025
+Canada,2900
+Israel,2800
+Lithuania,1025
+other,650
+Chinese Taipei,575
+Austria,400
+Latvia,325
+South Korea,150
+Netherlands,125
+Hong Kong,125
