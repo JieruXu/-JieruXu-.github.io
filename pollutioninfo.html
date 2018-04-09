@@ -1,0 +1,316 @@
+<html>
+
+  <head>
+    <title>What Do You Know About Pollution?</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://unpkg.com/topojson@3"></script>
+
+    <style type="text/css">
+        .axis text {
+          font: 10px sans-serif;
+        }
+
+        .axis line, .axis path {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+        svg{
+          padding-left: 50px;
+        }
+
+        /* Tooltip CSS */
+        #tooltip {
+          line-height: 1.5;
+          font-weight: 400;
+          font-family:"avenir next", Arial, sans-serif;
+          padding: 6px;
+          background: rgba(0, 0, 0, 0.6);
+          color: #7C93DA;
+          border-radius: 1px;
+          pointer-events: none;
+        }
+
+        .details{
+          color:white;
+        }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="content">
+        <h4 class="subtitle">What Do People Know About</h4>
+        <h1 class="title">POLLUTION</h1>
+        <hr>
+        <h4 class="subtitle">Pollution Index By Country 2018</h4>
+        <div id="tooltip"></div>
+        <svg id="map" width=1200 height=1000>
+          <rect width=1200 height=1000 fill="#353535"></rect>
+        </svg>
+
+        <div id="legend1"></div>
+    </div>
+
+
+  </body>
+
+  <script type="text/javascript">
+
+      var tip = d3.select("#tooltip")
+        .style("position", "absolute")
+        .style("opacity", 0);
+        // .html(function(d) {
+        //   return "<strong>Country: </strong><span class='details'>" +
+        //   d.countries.name + "<br></span>" + "<strong>Score: </strong><span class='details'>" + format(d.score) +"</span>";
+        // })
+
+      var margin = {top: 0, right: 0, bottom: 0, left: 0},
+          width = 960 - margin.left - margin.right,
+          height = 500 - margin.top - margin.bottom;
+
+      var w = 400, h = 50;
+
+      var key = d3.select("#legend1")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+
+      var legend = key.append("defs")
+        .append("svg:linearGradient")
+        .attr("id", "gradient")
+        .attr("x1", "0%")
+        .attr("y1", "100%")
+        .attr("x2", "100%")
+        .attr("y2", "100%")
+        .attr("spreadMethod", "pad");
+
+      legend.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "#F7C1BB")
+        .attr("stop-opacity", 1);
+
+      legend.append("stop")
+        .attr("offset", "33%")
+        .attr("stop-color", "#E56557")
+        .attr("stop-opacity", 1);
+
+      legend.append("stop")
+        .attr("offset", "66%")
+        .attr("stop-color", "#CD483A")
+        .attr("stop-opacity", 1);
+
+      legend.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", "#641E16")
+        .attr("stop-opacity", 1);
+
+      key.append("rect")
+        .attr("width", w)
+        .attr("height", h - 30)
+        .style("fill", "url(#gradient)")
+        .attr("transform", "translate(0,10)");
+
+      var y = d3.scaleLinear()
+        .range([400, 0])
+        .domain([92.03, 12.07]);
+
+      var yAxis = d3.axisBottom()
+        .scale(y)
+        .ticks(5);
+
+      key.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(0,30)")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("axis title");
+
+      //loading data
+      d3.queue()
+        .defer(d3.json, "world.json")
+        .defer(d3.csv, "pollution_index.csv")
+        .awaitAll(function(error, dataArray){
+          var pollutionData = dataArray[1];
+          var data = dataArray[0];
+          console.log(dataArray);
+
+          pollutionData.forEach(function(country) {
+            country.index = parseFloat(country.index);
+          });
+          console.log(pollutionData);
+          var geoJSON = topojson.feature(data, data.objects.countries);
+
+          geoJSON.features = geoJSON.features.filter(function(feature) {
+            return feature.id != "AQ";
+          });
+
+          var proj = d3.geoMercator()
+             .fitSize([1200, 1000], geoJSON);
+
+          var path = d3.geoPath()
+             .projection(proj);
+
+          var colorScale = d3.scaleLinear()
+             .domain([12.07, 92.03])
+             .range(["#F9E79F", "#641E16"]);
+
+          var countryLookup = {
+             RU: "Russia",
+             US: "United States",
+             IT: "Italy",
+             GT: "Great Britain",
+             DE: "Germany",
+             PL: "Poland",
+             CN: "China",
+             JP: "Japan",
+             UA: "Ukraine",
+             CA: "Canada",
+             IL: "Israel",
+             LT: "Lithuania",
+             TW: "Taiwan",
+             AT: "Austria",
+             LV: "Latvia",
+             KR: "South Korea",
+             NL: "Netherlands",
+             HK: "Hong Kong",
+             AF: "Afghanistan",
+             AL: "Albania",
+             DZ: "Algeria",
+             AR: "Argentina",
+             AM: "Armenia",
+             AU: "Australia",
+             BH: "Bahrain",
+             BD: "Bangladesh",
+             BY: "Belarus",
+             BE: "Belgium",
+             BA: "Bosnia and Herzegovina",
+             BR: "Brazil",
+             BG: "Bulgaria",
+             KH: "Cambodia",
+             CL: "Chile",
+             CO: "Colombia",
+             CR: "Costa Rica",
+             DO: "Dominican Republic",
+             EC: "Ecuador",
+             EG: "Egypt",
+             EE: "Estonia",
+             ET: "Ethiopia",
+             FI: "Finland",
+             FR: "France",
+             GE: "Georgia",
+             GR: "Greece",
+             HU: "Hungary",
+             IS: "Iceland",
+             IN: "India",
+             ID: "Indonesia",
+             IR: "Iran",
+             IQ: "Iraq",
+             IE: "Ireland",
+             JM: "Jamaica",
+             JO: "Jordan",
+             KZ: "Kazakhstan",
+             KE: "Kenya",
+             LB: "Lebanon",
+             MK: "Macedonia",
+             MY: "Malaysia",
+             MT: "Malta",
+             MU: "Mauritius",
+             MX: "Mexico",
+             MC: "Monaco",
+             MN: "Mongolia",
+             MA: "Morocco",
+             MM: "Myanmar",
+             NP: "Nepal",
+             NZ: "New Zealand",
+             NG: "Nigeria",
+             NO: "Norway",
+             OM: "Oman",
+             PK: "Pakistan",
+             PA: "Panama",
+             PE: "Peru",
+             PH: "Philippines",
+             PT: "Portugal",
+             QA: "Qatar",
+             RO: "Romania",
+             SA: "Saudi Arabia",
+             RS: "Serbia",
+             SG: "Singapore",
+             SK: "Slovakia",
+             SI: "Slovenia",
+             ZA: "South Africa",
+             ES: "Spain",
+             LK: "Sri Lanka",
+             SE: "Sweden",
+             CH: "Switzerland",
+             TH: "Thailand",
+             TN: "Tunisia",
+             TR: "Turkey",
+             AE: "United Arab Emirates",
+             UY: "Uruguay",
+             VE: "Venezuela",
+             VN: "Vietnam"
+
+           };
+
+          var countries = d3.select("#map").selectAll("path")
+              .data(geoJSON.features);
+
+          countries.enter().append("path")
+            .attr("fill", function(d) {
+              var countryName = countryLookup[d.id];
+              if (countryName == undefined) {
+                return "black";
+              }
+              var countryData = pollutionData.filter(function(d) { return d.country == countryName; });
+              console.log(d.id, countryName, countryData);
+              return colorScale(countryData[0].index);
+            })
+            .attr("stroke", "white")
+            .attr("stroke-width", 1)
+            .attr("d", function(feature) {
+              return path(feature);
+            })
+            .on('mousemove',function(d){
+
+              var countryName = countryLookup[d.id];
+              if (countryName == undefined) {
+                return;
+              }
+              var countryData = pollutionData.filter(function(d) { return d.country == countryName; });
+
+              tip
+                .html("<strong>Country: </strong> <span class='details'>" + countryData[0].country +
+                "<br></span>" + "<strong>index: </strong><span class='details'>" + countryData[0].index +"</span>")
+                .style("opacity", 1)
+                .style("left", d3.event.pageX + "px")
+                .style("top", d3.event.pageY - 50 + "px");
+
+              d3.select(this)
+
+                .style("opacity", 1)
+                .style("stroke","white")
+                .style("stroke-width",3);
+            })
+            .on('mouseout', function(d){
+              tip.style("opacity", 0);
+
+              d3.select(this)
+                .style("opacity", 0.8)
+                .style("stroke","white")
+                .style("stroke-width",0.3);
+            });
+
+        });
+
+
+  </script>
+
+
+
+
+</html>
