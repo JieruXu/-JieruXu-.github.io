@@ -284,6 +284,9 @@
               if (countryName == undefined) {
                 return "black";
               }
+              if (countryName.length == 0) {
+                return "black";
+              }
               var countryData = pollutionData.filter(function(d) { return d.country == countryName; });
               console.log(d.id, countryName, countryData);
               return colorScale(countryData[0].pollution);
