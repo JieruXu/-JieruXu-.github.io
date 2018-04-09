@@ -20,7 +20,7 @@
         }
 
         /* Tooltip CSS */
-        .d3-tip {
+        #tooltip {
           line-height: 1.5;
           font-weight: 400;
           font-family:"avenir next", Arial, sans-serif;
@@ -31,86 +31,49 @@
           pointer-events: none;
         }
 
-        /* Creates a small triangle extender for the tooltip */
-        .d3-tip:after {
-          box-sizing: border-box;
-          display: inline;
-          font-size: 8px;
-          width: 100%;
-          line-height: 1.5;
-          color: rgba(0, 0, 0, 0.6);
-          position: absolute;
-          pointer-events: none;
-
-        }
-
-        /* Northward tooltips */
-        .d3-tip.n:after {
-          content: "\25BC";
-          margin: -1px 0 0 0;
-          top: 100%;
-          left: 0;
-          text-align: center;
-        }
-
-        /* Eastward tooltips */
-        .d3-tip.e:after {
-          content: "\25C0";
-          margin: -4px 0 0 0;
-          top: 50%;
-          left: -8px;
-        }
-
-        /* Southward tooltips */
-        .d3-tip.s:after {
-          content: "\25B2";
-          margin: 0 0 1px 0;
-          top: -8px;
-          left: 0;
-          text-align: center;
-        }
-
-        /* Westward tooltips */
-        .d3-tip.w:after {
-          content: "\25B6";
-          margin: -4px 0 0 -1px;
-          top: 50%;
-          left: 100%;
-        }
-
-    /*    text{
-          pointer-events:none;
-        }*/
-
         .details{
           color:white;
         }
 
+        h4.subtitle {
+          font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+          color: black;
+
+        }
+
+        h1.title {
+          font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+          color: black;
+        }
     </style>
 
   </head>
 
-  <body>
+  <body style="background-color:#353535;">
+
+    <div id="tooltip"></div>
+
     <svg id="map" width=1200 height=1000>
-      <rect width=1200 height=1000 fill="white"></rect>
+      <rect width=1200 height=1000 fill="#353535"></rect>
     </svg>
 
     <div id="legend1"></div>
+
   </body>
 
   <script type="text/javascript">
 
-      var tip = d3.tip()
-      .attr('class', 'd3-tip')
-      .offset([-10, 0])
-      .html(function(d) {
-        return "<strong>Country: </strong><span class='details'>" +
-        d.properties.name + "<br></span>" + "<strong>Score: </strong><span class='details'>" + format(d.score) +"</span>";
-      })
+      var tip = d3.select("#tooltip")
+        .style("position", "absolute")
+        .style("opacity", 0);
+        // .html(function(d) {
+        //   return "<strong>Country: </strong><span class='details'>" +
+        //   d.countries.name + "<br></span>" + "<strong>Score: </strong><span class='details'>" + format(d.score) +"</span>";
+        // })
 
       var margin = {top: 0, right: 0, bottom: 0, left: 0},
-      width = 960 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+          width = 960 - margin.left - margin.right,
+          height = 500 - margin.top - margin.bottom;
 
       var w = 400, h = 50;
 
@@ -185,7 +148,7 @@
           danceData.forEach(function(country) {
             country.score = parseFloat(country.score);
           });
-
+          console.log(danceData);
           var geoJSON = topojson.feature(data, data.objects.countries);
 
           geoJSON.features = geoJSON.features.filter(function(feature) {
@@ -231,7 +194,7 @@
             .attr("fill", function(d) {
               var countryName = countryLookup[d.id];
               if (countryName == undefined) {
-                return "#CACFD2";
+                return "black";
               }
               var countryData = danceData.filter(function(d) { return d.country == countryName; });
               console.log(d.id, countryName, countryData);
@@ -241,52 +204,35 @@
             .attr("stroke-width", 1)
             .attr("d", function(feature) {
               return path(feature);
+            })
+            .on('mousemove',function(d){
+
+              var countryName = countryLookup[d.id];
+              if (countryName == undefined) {
+                return;
+              }
+              var countryData = danceData.filter(function(d) { return d.country == countryName; });
+
+              tip
+                .html("<strong>Country: </strong> <span class='details'>" + countryData[0].country +
+                "<br></span>" + "<strong>Score: </strong><span class='details'>" + countryData[0].score +"</span>")
+                .style("opacity", 1)
+                .style("left", d3.event.pageX + "px")
+                .style("top", d3.event.pageY - 50 + "px");
+
+              d3.select(this)
+                .style("opacity", 1)
+                .style("stroke","white")
+                .style("stroke-width",3);
+            })
+            .on('mouseout', function(d){
+              tip.style("opacity", 0);
+
+              d3.select(this)
+                .style("opacity", 0.8)
+                .style("stroke","white")
+                .style("stroke-width",0.3);
             });
-
-
-            function ready(error, data, score) {
-
-              var scoreById = {};
-
-              score.forEach(function(d) { scoreById[d.id] = +d.score; });
-              data.features.forEach(function(d) { d.score = scoreById[d.id] });
-
-              svg.append("g")
-                  .attr("class", "countries")
-                .selectAll("path")
-                  .data(data.features)
-                .enter().append("path")
-                  .attr("d", path)
-                  .style("fill", function(d) { return color(scoreById[d.id]); })
-                  .style('stroke', 'white')
-                  .style('stroke-width', 1.5)
-                  .style("opacity",0.8)
-                  // tooltips
-                    .style("stroke","white")
-                    .style('stroke-width', 0.3)
-                    .on('mouseover',function(d){
-                      tip.show(d);
-
-                      d3.select(this)
-                        .style("opacity", 1)
-                        .style("stroke","white")
-                        .style("stroke-width",3);
-                    })
-                    .on('mouseout', function(d){
-                      tip.hide(d);
-
-                      d3.select(this)
-                        .style("opacity", 0.8)
-                        .style("stroke","white")
-                        .style("stroke-width",0.3);
-                    });
-
-              svg.append("path")
-                  .datum(topojson.mesh(data.features, function(a, b) { return a.id !== b.id; }))
-                   // .datum(topojson.mesh(data.features, function(a, b) { return a !== b; }))
-                  .attr("class", "names")
-                  .attr("d", path);
-            }
 
         });
 
