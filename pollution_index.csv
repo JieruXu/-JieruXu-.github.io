@@ -1,99 +1,99 @@
-Rank,,country,index
-98,V,Afghanistan,92.65
-97,V,Albania,75.21
-96,V,Algeria,64.16
-95,V,Argentina,53.64
-94,V,Armenia,63.55
-93,V,Australia,24.76
-92,v,Austria,22.87
-91,v,Bahrain,76.41
-90,v,Bangladesh,88.93
-89,v,Belarus,36
-88,v,Belgium,48.92
-87,,Bosnia And Herzegovina,61.56
-86,,Brazil,59.48
-85,,Bulgaria,63.03
-84,,Cambodia,79.41
-83,v,Canada,27.7
-82,,Chile,66.79
-81,v,China,85.89
-80,,Colombia,62.47
-79,,Costa Rica,49.87
-78,,Croatia,32.73
-77,,Cyprus,55.76
-76,,Czech Republic,41.02
-75,,Denmark,23.6
-74,,Dominican Republic ,76.8
-73,,Ecuador,59.19
-72,,Egypt,87.64
-71,,Estonia,17.17
-70,,Ethiopia,77.96
-69,,Finland,12.07
-68,,France,40.41
-67,,Georgia,73.43
-66,v,Germany,27.32
-65,,Greece,52.85
-64,v,Hong Kong,69.35
-63,V,Hungary,46.57
-62,V,Iceland,13.73
-61,V,India,75.89
-60,V,Indonesia,60.66
-59,,Iran,81.21
-58,,Iraq,79.35
-57,,Ireland,28.66
-56,v,Israel,60.27
-55,v,Italy,53.11
-54,,Jamaica,71.89
-53,v,Japan,41.66
-52,,Jordan,82.26
-51,,Kazakhstan,73.71
-50,,Kenya,72.26
-49,v,Latvia,31.81
-48,,Lebanon,85.68
-47,v,Lithuania,33.14
-46,,Macedonia,82.04
-45,,Malaysia,66.52
-44,,Malta,71.93
-43,,Mauritius,57.56
-42,,Mexico,66.13
-41,,Monaco,83.71
-40,,Mongolia,92.65
-39,,Morocco,67.66
-38,,Myanmar,93.03
-37,,Nepal,84.01
-36,v,Netherlands,27.16
-35,,New Zealand,21.77
-34,,Nigeria,85.54
-33,,Norway,20.22
-32,,Oman,42.78
-31,,Pakistan,77.5
-30,,Panama,65.91
-29,,Peru,83.35
-28,,Philippines,72.55
-27,v,Poland,51.12
-26,,Portugal,30.53
-25,,Qatar,70.24
-24,,Romania,53.04
-23,v,Russia,63.26
-22,,Saudi Arabia,71.72
-21,,Serbia,56.58
-20,,Singapore,33.94
-19,,Slovakia,40.67
-18,,Slovenia,26.25
-17,,South Africa,62.15
-16,v,South Korea,52.87
-15,,Spain,38.11
-14,,Sri Lanka,60.64
-13,,Sweden,19.1
-12,,Switzerland,23.01
-11,v,Taiwan,63.25
-10,,Thailand,72.86
-9,,Tunisia,66.16
-8,,Turkey,69.44
-7,v,Ukraine,67.24
-6,,United Arab Emirates,55.78
-5,v,Great Britain,37.71
-4,v,United States,31.7
-3,,Uruguay,49.37
-2,,Venezuela,73.66
-1,,Vietnam,88.1
+Rank,country,index
+98,Afghanistan,92.65
+97,Albania,75.21
+96,Algeria,64.16
+95,Argentina,53.64
+94,Armenia,63.55
+93,Australia,24.76
+92,Austria,22.87
+91,Bahrain,76.41
+90,Bangladesh,88.93
+89,Belarus,36
+88,Belgium,48.92
+87,Bosnia And Herzegovina,61.56
+86,Brazil,59.48
+85,Bulgaria,63.03
+84,Cambodia,79.41
+83,Canada,27.7
+82,Chile,66.79
+81,China,85.89
+80,Colombia,62.47
+79,Costa Rica,49.87
+78,Croatia,32.73
+77,Cyprus,55.76
+76,Czech Republic,41.02
+75,Denmark,23.6
+74,Dominican Republic ,76.8
+73,Ecuador,59.19
+72,Egypt,87.64
+71,Estonia,17.17
+70,Ethiopia,77.96
+69,Finland,12.07
+68,France,40.41
+67,Georgia,73.43
+66,Germany,27.32
+65,Greece,52.85
+64,Hong Kong,69.35
+63,Hungary,46.57
+62,Iceland,13.73
+61,India,75.89
+60,Indonesia,60.66
+59,Iran,81.21
+58,Iraq,79.35
+57,Ireland,28.66
+56,Israel,60.27
+55,Italy,53.11
+54,Jamaica,71.89
+53,Japan,41.66
+52,Jordan,82.26
+51,Kazakhstan,73.71
+50,Kenya,72.26
+49,Latvia,31.81
+48,Lebanon,85.68
+47,Lithuania,33.14
+46,Macedonia,82.04
+45,Malaysia,66.52
+44,Malta,71.93
+43,Mauritius,57.56
+42,Mexico,66.13
+41,Monaco,83.71
+40,Mongolia,92.65
+39,Morocco,67.66
+38,Myanmar,93.03
+37,Nepal,84.01
+36,Netherlands,27.16
+35,New Zealand,21.77
+34,Nigeria,85.54
+33,Norway,20.22
+32,Oman,42.78
+31,Pakistan,77.5
+30,Panama,65.91
+29,Peru,83.35
+28,Philippines,72.55
+27,Poland,51.12
+26,Portugal,30.53
+25,Qatar,70.24
+24,Romania,53.04
+23,Russia,63.26
+22,Saudi Arabia,71.72
+21,Serbia,56.58
+20,Singapore,33.94
+19,Slovakia,40.67
+18,Slovenia,26.25
+17,South Africa,62.15
+16,South Korea,52.87
+15,Spain,38.11
+14,Sri Lanka,60.64
+13,Sweden,19.1
+12,Switzerland,23.01
+11,Taiwan,63.25
+10,Thailand,72.86
+9,Tunisia,66.16
+8,Turkey,69.44
+7,Ukraine,67.24
+6,United Arab Emirates,55.78
+5,Great Britain,37.71
+4,United States,31.7
+3,Uruguay,49.37
+2,Venezuela,73.66
+1,Vietnam,88.1
