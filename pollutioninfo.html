@@ -18,6 +18,15 @@
 
         }
 
+        .arc text {
+          font: 20px sans-serif;
+          text-anchor: middle;
+        }
+
+        .arc path {
+          stroke: #fff;
+        }
+
         svg{
           padding-left: 50px;
         }
@@ -45,6 +54,12 @@
 
         h4.subtitle {
           color: #d3d6d8;
+
+        }
+
+        h4.text {
+          color: #d3d6d8;
+
         }
 
         h4.source {
@@ -52,26 +67,146 @@
           text-align: right;
         }
 
+        h4.source2 {
+          color: #d3d6d8;
+          text-align: center;
+        }
+
+        h4.pietitle {
+          color: #d3d6d8;
+          text-align: center;
+        }
+
+        h1.data {
+          color: white;
+          text-align: center;
+        }
+
+        h4.dataex {
+          color: #d3d6d8;
+          text-align: center;
+        }
+
         h1.title {
           color: white;
+
         }
+
+        h1.impt {
+          color: white;
+
+        }
+
+        .content {
+        	text-align: left;
+        	margin: .5em 0;
+        }
+
+        .content2 {
+        	text-align: center;
+        	margin: .5em 0;
+        }
+
+        div.one-third {
+          width:33.33%;
+          float:left;
+          padding-right: 0px;
+        }
+
+
+
     </style>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/skeleton-16col.css">
   </head>
 
   <body style="background-color:#353535;">
     <div class="content">
         <br>
+
         <h4 class="subtitle">What Do People Know About</h4>
         <h1 class="title">POLLUTION</h1>
         <hr>
+
         <h4 class="subtitle">Pollution Index By Country 2018</h4>
         <h4 class="source">Made by Jieru Xu. <a href="https://www.numbeo.com">Soure: www.numbeo.com</a></h4>
+    </div>
+
         <div id="tooltip"></div>
+
         <svg id="map" width=1200 height=1000>
           <rect width=1200 height=1000 fill="#353535"></rect>
         </svg>
 
         <div id="legend1"></div>
+        <br>
+        <br>
+        <hr>
+        <br>
+      <div class="content2">
+        <div class="one-third">
+          <h4 class="text">More than</h4>
+          <h1 class="impt">1 billion</h1>
+          <h4 class="text">people worldwide don't have access to safe <br> drinking water.</h4>
+          <br>
+
+          <h4 class="text"><br>People who live in places with high levels of<br>  air pollutants have a </h4>
+          <h1 class="impt">20%</h1>
+          <h4 class="text">higher risk of death from lung cancer than <br> people who live in less-polluted areas.</h4>
+          <br>
+
+          <h4 class="text"><br>In America alone 3 million plastic bottles <br> are thrown away every hour. However, it takes up to</h4>
+          <h1 class="impt">500 years</h1>
+          <h4 class="text">for the plastic bottle to decompose.</h4>
+          <br>
+
+          <h4 class="text"><br>Landflls are among the biggest contributors<br> to soil pollution. About</h4>
+          <h1 class="impt">80%</h1>
+          <h4 class="text">of the items buried in landflls could be recycled.</h4>
+          <br>
+          <br>
+        </div>
+
+        <div class="one-third">
+          <h4 class="text">Approximately</h4>
+          <h1 class="impt">40%</h1>
+          <h4 class="text">of the lakes in America are too polluted for <br> fshing, aquatic life, or swimming.</h4>
+          <br>
+
+          <h4 class="text"><br>Each year</h4>
+          <h1 class="impt">1.2 trillion gallons</h1>
+          <h4 class="text"><br>of untreated sewage, stormwater, and industrial <br> waste are dumped into US water.</h4>
+          <br>
+
+          <h4 class="text"><br>Every year, more than</h4>
+          <h1 class="impt">14 billion pounds</h1>
+          <h4 class="text">of untreated sewage, stormwater, and industrial <br> waste are dumped into US water.</h4>
+          <br>
+
+          <h4 class="text"><br>Pollution kills more than</h4>
+          <h1 class="impt">1 million</h1>
+          <h4 class="text"><br>seabirds and 100 million mammals every year.</h4>
+          <br>
+          <br>
+
+        </div>
+
+        <div class="one-third">
+
+          <h4 class="pietitle">Types of Emission sources and their<br>contribution to pollution in percentage</h4>
+          <div id="pie"></div>
+          <h4 class="source2">Soure: www.kued.org</h4>
+
+          <h1 class="impt"><br>57% Vehicles (cars, trucks, planes, lawnmowers, etc.)
+            <br><br> 32% Buildings (Homes, small businesses, restaurants, aerosol products, etc.)
+            <br><br> 11% Industry (Mines, refneries, large industry, etc)
+          </h1>
+
+
+
+        </div>
+
+        </div>
     </div>
 
 
@@ -175,7 +310,7 @@
 
           var colorScale = d3.scaleLinear()
              .domain([12.07, 92.03])
-             .range(["#F9E79F", "#641E16"]);
+             .range(["#E47C7C", "#B70303"]);
 
           var countryLookup = {
              RU: "Russia",
@@ -327,6 +462,48 @@
             });
 
         });
+
+        var data = [11, 32, 57];
+
+        var width = 300,
+            height = 300,
+            radius = Math.min(width, height) / 2;
+
+        var color = d3.scaleOrdinal()
+            .range(["#edc55f", "#db5e44", "#b81f3f"]);
+
+        var arc = d3.arc()
+            .outerRadius(radius - 10)
+            .innerRadius(0);
+
+        var labelArc = d3.arc()
+            .outerRadius(radius - 40)
+            .innerRadius(radius - 40);
+
+        var pie = d3.pie()
+            .sort(null)
+            .value(function(d) { return d; });
+
+        var svg = d3.select("#pie").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+          .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+          var g = svg.selectAll(".arc")
+              .data(pie(data))
+            .enter().append("g")
+              .attr("class", "arc");
+
+          g.append("path")
+              .attr("d", arc)
+              .style("fill", function(d) { return color(d.data); });
+
+          g.append("text")
+              .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+              .attr("dy", ".35em")
+              .text(function(d) { return d.data; });
+
 
 
   </script>
