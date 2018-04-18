@@ -8,13 +8,13 @@
     <style>
         .axis text {
           font: 10px sans-serif;
-
+          stroke: #d3d6d8;
         }
 
         .axis line, .axis path {
           fill: none;
           stroke: #d3d6d8;
-          shape-rendering: crispEdges;
+
 
         }
 
@@ -116,8 +116,7 @@
 
 
     </style>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/skeleton-16col.css">
+
   </head>
 
   <body style="background-color:#353535;">
@@ -128,14 +127,14 @@
         <h1 class="title">POLLUTION</h1>
         <hr>
 
-        <h4 class="subtitle">Pollution Index By Country 2018</h4>
+        <h4 class="subtitle">Pollution Index By TOP 100 Countries 2018</h4>
         <h4 class="source">Made by Jieru Xu. <a href="https://www.numbeo.com">Soure: www.numbeo.com</a></h4>
     </div>
 
         <div id="tooltip"></div>
 
-        <svg id="map" width=1200 height=1000>
-          <rect width=1200 height=1000 fill="#353535"></rect>
+        <svg id="map" width=1300 height=1000>
+          <rect width=1300 height=1000 fill="#353535"></rect>
         </svg>
 
         <div id="legend1"></div>
@@ -240,22 +239,22 @@
 
       legend.append("stop")
         .attr("offset", "0%")
-        .attr("stop-color", "#F7C1BB")
+        .attr("stop-color", "#E8C962")
         .attr("stop-opacity", 1);
 
       legend.append("stop")
         .attr("offset", "33%")
-        .attr("stop-color", "#E56557")
+        .attr("stop-color", "#E7A757")
         .attr("stop-opacity", 1);
 
       legend.append("stop")
         .attr("offset", "66%")
-        .attr("stop-color", "#CD483A")
+        .attr("stop-color", "#EC7D4F")
         .attr("stop-opacity", 1);
 
       legend.append("stop")
         .attr("offset", "100%")
-        .attr("stop-color", "#641E16")
+        .attr("stop-color", "#B71D3E")
         .attr("stop-opacity", 1);
 
       key.append("rect")
@@ -281,7 +280,7 @@
         .attr("y", 0)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("axis title");
+        .text("");
 
       //loading data
       d3.queue()
@@ -310,7 +309,7 @@
 
           var colorScale = d3.scaleLinear()
              .domain([12.07, 92.03])
-             .range(["#E47C7C", "#B70303"]);
+             .range(["#E8C962", "#B71D3E"]);
 
           var countryLookup = {
              RU: "Russia",
@@ -426,7 +425,7 @@
               console.log(d.id, countryName, countryData);
               return colorScale(countryData[0].pollution);
             })
-            .attr("stroke", "white")
+            .attr("stroke", "gray")
             .attr("stroke-width", 1)
             .attr("d", function(feature) {
               return path(feature);
